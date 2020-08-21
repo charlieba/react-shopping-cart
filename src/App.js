@@ -33,8 +33,15 @@ filterProducts = (event) => {
     this.setState({size: event.target.value, product:data.products});
   }else if(event.target.value==="ALL"){
     this.setState({
-      products: data.products,
-      size: event.target.value
+      products: data.products.slice().sort((a,b)=>(
+        this.state.sort === "lowest"?
+        ((a.price > b.price)? 1:-1):
+        this.state.sort === "highest"?
+        ((a.price < b.price)? 1:-1):
+        ((a._id < b._id)? 1:-1)
+      )),
+      size: event.target.value,
+      sort: this.state.sort
     });
   }else{
     this.setState({
